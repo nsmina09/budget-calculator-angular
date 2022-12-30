@@ -1,0 +1,54 @@
+<nav class="navbar bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/images/logo.svg" alt="Money Tracker" width="330" height="24">
+        </a>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-4"></div>
+   
+        <div class="col-4 mt-5 p-3 text-center border border-1 border-success">
+            <h4 class="text-success">Register</h4>
+             <form class="text-center" action="" [formGroup]="registerForm">
+            <input formControlName="fullname" class="mt-1 form-control border-success" id="fullname" type="text"
+                placeholder="Name">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('fullname')?.errors && this.registerForm.get('fullname')?.touched">please enter a valid name</div>
+            <br>
+            <input formControlName="designation" class="mt-1 form-control border-success" id="designation" type="text"
+                placeholder="Designation">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('designation')?.errors && this.registerForm.get('designation')?.touched">please enter a valid designation</div>
+            <br>
+            <input formControlName="monthlyIncome" class="mt-1 form-control border-success" id="monthlyIncome"
+                type="text" placeholder="Monthly income">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('monthlyIncome')?.errors && this.registerForm.get('monthlyIncome')?.touched">please enter a valid income</div>
+            <br>
+            <input formControlName="currentBalance" class="mt-1 form-control border-success" id="currentBalance"
+                type="text" placeholder="Current Balance">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('currentBalance')?.errors && this.registerForm.get('currentBalance')?.touched">please enter a valid balance</div>
+            <br>
+            <input formControlName="amountToSave" class="mt-1 form-control border-success" id="amountToSave" type="text"
+                placeholder="Amount you want to save per month">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('amountToSave')?.errors && this.registerForm.get('amountToSave')?.touched">please enter a valid amount</div>
+            <br>
+            <input formControlName="username" class="mt-1 form-control border-success" id="username" type="text"
+                placeholder="Username">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('username')?.errors && this.registerForm.get('username')?.touched">please enter a valid username</div>
+            <br>
+
+            <input formControlName="password" class="mt-1 form-control border-success" id="password" type="password"
+                placeholder="Password">
+                <div class="text-danger text-start" *ngIf="this.registerForm.get('password')?.errors && this.registerForm.get('password')?.touched">please enter a valid password</div>
+            <br>
+
+            <input class="mt-1 btn btn-outline-success" (click)="register()" type="button" value="Submit">
+            <div class="d-flex justify-content-center">
+                <p>Already have an account?</p>
+                <a class="ms-1 text-decoration-none text-success" routerLink="/login">Login</a>
+            </div>
+
+   
+    </form>
+</div>
+    <div class="col-4"></div>
+</div>

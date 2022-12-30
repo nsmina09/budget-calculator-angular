@@ -1,0 +1,34 @@
+<nav class="navbar bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/images/logo.svg" alt="Money Tracker" width="330" height="24">
+        </a>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 mt-5 p-3 text-center border border-1 border-success">
+        <h4 class="text-success">Login</h4>
+        <form action="" [formGroup]="loginForm">
+            <input formControlName="username" class="form-control border-success" id="username" type="text"
+                placeholder="Username">
+            <div class="text-center text-danger"
+                *ngIf="this.loginForm.get('username')?.errors && this.loginForm.get('username')?.touched">please enter
+                valid username</div>
+            <br>
+            <input formControlName="password" class="mt-1 form-control border-success" id="password" type="password"
+                placeholder="Password">
+            <div class="text-center text-danger"
+                *ngIf="this.loginForm.get('password')?.errors && this.loginForm.get('password')?.touched">please enter
+                valid password</div>
+            <br>
+            <input class="mt-1 btn btn-outline-success" (click)="login()" type="button" value="Submit">
+        </form>
+        <div class="d-flex justify-content-center">
+            <p>Dont have an account?</p>
+            <a class="ms-1 text-decoration-none text-success" routerLink="/register">Register</a>
+        </div>
+
+    </div>
+    <div class="col-4"></div>
+</div>

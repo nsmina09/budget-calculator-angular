@@ -1,0 +1,130 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand text-success" href="#">Transactions</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="#">Last Month</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">This Month</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Future</a>
+                </li>
+            </ul>
+            <!-- user in nav bar -->
+            <div class="text-success  me-auto" id="user">Hai {{currentUser}}</div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Transaction
+            </button>
+            <button (click)="logout()" type="button" class="btn btn-outline-success mx-4">
+                LogOut
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Modal -->
+<div class="modal fade text-start" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Transaction</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5">
+                <form action="">
+                    <div id="radiodiv" class="mb-3">
+                        <label for="credit">Credit</label>
+                        <input (change)="onChange($event)" id="credit" type="radio" value="credit"
+                            name="typeOfTransaction">
+                        <label for="debit">Debit</label>
+                        <input (change)="onChange($event)" id="debit" type="radio" value="debit"
+                            name="typeOfTransaction">
+                    </div>
+
+                    <label for="">Category(required)</label>
+                    <input [(ngModel)]="category" class="mb-3 form-control border-success border-success" id="category"
+                        type="text" placeholder="Category" name="category">
+
+                    <label for="">Amount (required)</label>
+                    <input [(ngModel)]="amount" class="form-control border-success" id="amount" type="text"
+                        placeholder="Amount" name="amount">
+
+                    <br>
+                    <label for="">Date (required)</label>
+                    <input [(ngModel)]="date" class="mb-3 form-control border-success" id="date" type="date"
+                        placeholder="Date" name="date">
+
+                    <label for="">Note </label>
+                    <input [(ngModel)]="note" class="form-control border-success" type="text" placeholder="Note"
+                        id="note" name="note">
+
+                </form>
+                <br>
+                <button id="myBtn" (click)=" more = !more " class="btn">{{ more ? 'show More' : ' Show Less' }}</button>
+                <br>
+              
+                        <div class=" my-3 docdiv border border-1 border-success p-3 rounded my-3 moree" [ngStyle]="more?{'visibility':'hidden'}:{'visibility':'visible'}">
+                            <p>Drop file to attach
+                                <!-- <span class="text-success">Browse</span> -->
+                            </p>
+                            <input type="file" name="">
+                        </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button (click)="addTransaction()" type="button" class="btn btn-outline-success"
+                    data-bs-dismiss="modal">Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="w-75 border-success border-1 my-3">
+            <thead>
+                <tr>
+                    <th class="border border-success border-1">Date</th>
+                    <th class="border border-success border-1">Category</th>
+                    <th class="border border-success border-1">Amount</th>
+                    <th class="border border-success border-1">Current Balance</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="result" #table>
+                <tr *ngIf="eachbal.length==0">
+                    <td class="border border-success border-1"></td>
+                    <td class="border border-success border-1">balance</td>
+                    <td class="border border-success border-1"></td>
+                    <td class="border border-success border-1">{{balance}}</td>
+                </tr>
+                <!-- <tr >
+                    <td class="border border-success border-1"></td>
+                    <td class="border border-success border-1">balance</td>
+                    <td class="border border-success border-1"></td>
+                    <td class="border border-success border-1">{{balance}}</td>
+                </tr> -->
+                <tr  *ngFor=" let b of eachbal;last as l; ">
+                    <td class="border border-success border-1">{{b.date}}</td>
+                    <td class="border border-success border-1">{{b.category}}</td>
+                    <td class="border border-success border-1">{{b.amount}}</td>
+                    <td class="border border-success border-1">{{b.bal}}</td>
+                    <th *ngIf="l"><Button (click)="delete(table)" class="btn btn-outline-warning">Delete</Button></th>
+                    <th *ngIf="l"><Button (click)="edit()" class="btn btn-outline-warning">Edit</Button></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>

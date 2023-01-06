@@ -7,3 +7,7 @@
 #more {
     display: none;
 }
+
+nav a.link-active{
+    color: green;
+}

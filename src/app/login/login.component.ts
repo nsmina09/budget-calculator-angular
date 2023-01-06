@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('currentUsername',result.currentUsername);
         localStorage.setItem('token',result.token);
         localStorage.setItem('balance',result.balance);
+        localStorage.setItem('appRegisteredMonth',result.appRegisteredMonth)
         this.router.navigateByUrl('/budget')
        },
        (result)=>{

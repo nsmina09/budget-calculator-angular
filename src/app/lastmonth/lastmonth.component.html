@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a routerLink="/budget" class="navbar-brand text-success">Transactions</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" (click)="lastMonth()">Last Month</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-4" routerLink="/budget" routerLinkActive="link-active">Current Month </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/remarks" routerLinkActive="link-active">Transaction History</a>
+                </li>
+            </ul>
+            <!-- user in nav bar -->
+            <div class="text-success  me-auto " id="user">{{currentUser|uppercase}}</div>
+            <!-- Button for logout -->
+            <button type="button" class="btn btn-outline-success mx-4" (click)="logout()">
+                LogOut
+            </button>
+        </div>
+    </div>
+</nav>
+
+<h1 class="text-success text-center">{{month}}</h1>
+
+<p *ngIf="lastMonthArray.length==0" class="text-success text-center"> No Transactions at this month</p>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="w-75 border-success border-1 my-3" *ngIf="lastMonthArray.length!=0">
+            <thead>
+                <tr>
+                    <th class="border border-success border-1">Date</th>
+                    <th class="border border-success border-1">Category</th>
+                    <th class="border border-success border-1">Amount</th>
+                    <th class="border border-success border-1">Current Balance</th>
+
+                </tr>
+            </thead>
+            <tbody id="result" #table>
+                <tr *ngFor=" let b of lastMonthArray ">
+                    <td class="border border-success border-1">{{b.date | date:'mediumDate'}}</td>
+                    <td class="border border-success border-1">{{b.category}}</td>
+                    <td class="border border-success border-1">{{b.amount}}</td>
+                    <td class="border border-success border-1">{{b.bal}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -18,9 +18,12 @@ export class RegisterComponent implements OnInit {
   amountToSave: any;
   username: any;
   password: any;
+  appRegisteredMonth:any;
 
   //constructor
-  constructor(private router: Router, private ds: DataserviceService, private fb: FormBuilder) { }
+  constructor(private router: Router, private ds: DataserviceService, private fb: FormBuilder) { 
+    this.appRegisteredMonth=new Date()
+  }
 
   ngOnInit(): void {
   }
@@ -47,7 +50,7 @@ export class RegisterComponent implements OnInit {
     let username = this.registerForm.value.username;
     let password = this.registerForm.value.password;
     if (this.registerForm.valid) {
-      this.ds.register(fullname, designation, monthlyIncome, currentBalance, amountToSave, username, password)
+      this.ds.register(fullname, designation, monthlyIncome, currentBalance, amountToSave, username, password,this.appRegisteredMonth)
         .subscribe((result: any) => {
           alert(result.message);
           this.router.navigateByUrl('login');

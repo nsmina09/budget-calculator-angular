@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand text-success" href="#">Transactions</a>
+        <a routerLink="/budget" class="navbar-brand text-success" href="#">Transactions</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,17 +8,17 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="#">Last Month</a>
+                    <a class="nav-link " aria-current="page"  routerLinkActive="link-active" (click)="lastMonth()">Last Month</a>
+                </li>
+                <li class="nav-item mx-4">
+                    <a class="nav-link active" active routerLink="/budget" routerLinkActive="link-active">Current Month </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">This Month</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Future</a>
+                    <a class="nav-link" routerLink="/remarks" routerLinkActive="link-active">Transaction History</a>
                 </li>
             </ul>
             <!-- user in nav bar -->
-            <div class="text-success  me-auto" id="user">Hai {{currentUser}}</div>
+            <div class="text-success  me-auto" id="user">{{currentUser | uppercase}} </div>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add Transaction
@@ -40,6 +40,7 @@
             </div>
             <div class="modal-body p-5">
                 <form action="">
+                    
                     <div id="radiodiv" class="mb-3">
                         <label for="credit">Credit</label>
                         <input (change)="onChange($event)" id="credit" type="radio" value="credit"
@@ -60,7 +61,9 @@
                     <br>
                     <label for="">Date (required)</label>
                     <input [(ngModel)]="date" class="mb-3 form-control border-success" id="date" type="date"
-                        placeholder="Date" name="date">
+                        placeholder="Date" name="date"
+                        [max]="getToday()" [min]="getMin()"
+                         >
 
                     <label for="">Note </label>
                     <input [(ngModel)]="note" class="form-control border-success" type="text" placeholder="Note"
@@ -80,6 +83,7 @@
                 
             </div>
             <div class="modal-footer">
+                
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button (click)="addTransaction()" type="button" class="btn btn-outline-success"
                     data-bs-dismiss="modal">Save </button>
@@ -104,7 +108,7 @@
             </thead>
             <tbody id="result" #table>
                 <tr *ngIf="eachbal.length==0">
-                    <td class="border border-success border-1"></td>
+                    <td class="border border-success border-1">{{appRegisteredMonth | date:'mediumDate'}}</td>
                     <td class="border border-success border-1">balance</td>
                     <td class="border border-success border-1"></td>
                     <td class="border border-success border-1">{{balance}}</td>
@@ -116,15 +120,81 @@
                     <td class="border border-success border-1">{{balance}}</td>
                 </tr> -->
                 <tr  *ngFor=" let b of eachbal;last as l; ">
-                    <td class="border border-success border-1">{{b.date}}</td>
+                    <td class="border border-success border-1">{{b.date | date:'mediumDate'}}</td>
                     <td class="border border-success border-1">{{b.category}}</td>
                     <td class="border border-success border-1">{{b.amount}}</td>
                     <td class="border border-success border-1">{{b.bal}}</td>
                     <th *ngIf="l"><Button (click)="delete(table)" class="btn btn-outline-warning">Delete</Button></th>
-                    <th *ngIf="l"><Button (click)="edit()" class="btn btn-outline-warning">Edit</Button></th>
+                    <th *ngIf="l"><Button data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="edit()" class="btn btn-outline-warning">Edit</Button></th>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="col-2"></div>
 </div>
+
+<!-- modal for edit option -->
+
+
+<!-- Modal -->
+<!-- <div class="modal fade text-start" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Transaction</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5">
+                <form action="">
+                    
+                    <div id="radiodiv" class="mb-3">
+                        <label for="credit">Credit</label>
+                        <input (change)="onChange($event)" id="credit" type="radio" value="credit"
+                            name="typeOfTransaction">
+                        <label for="debit">Debit</label>
+                        <input (change)="onChange($event)" id="debit" type="radio" value="debit"
+                            name="typeOfTransaction">
+                    </div>
+
+                    <label for="">Category(required)</label>
+                    <input [(ngModel)]="category" class="mb-3 form-control border-success border-success" id="category"
+                        type="text" placeholder="category" name="category">
+
+                    <label for="">Amount (required)</label>
+                    <input [(ngModel)]="amount" class="form-control border-success" id="amount" type="text"
+                        placeholder="Amount" name="amount">
+
+                    <br>
+                    <label for="">Date (required)</label>
+                    <input [(ngModel)]="date" class="mb-3 form-control border-success" id="date" type="date"
+                        placeholder="Date" name="date"
+                        [max]="getToday()" [min]="getMin()"
+                         >
+
+                    <label for="">Note </label>
+                    <input [(ngModel)]="note" class="form-control border-success" type="text" placeholder="Note"
+                        id="note" name="note">
+
+                </form>
+                <br>
+                <button id="myBtn" (click)=" more = !more " class="btn">{{ more ? 'show More' : ' Show Less' }}</button>
+                <br>
+              
+                        <div class=" my-3 docdiv border border-1 border-success p-3 rounded my-3 moree" [ngStyle]="more?{'visibility':'hidden'}:{'visibility':'visible'}">
+                            <p>Drop file to attach
+                              
+                            </p>
+                            <input type="file" name="">
+                        </div>
+                
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button (click)="addTransaction()" type="button" class="btn btn-outline-success"
+                    data-bs-dismiss="modal">Save </button>
+            </div>
+        </div>
+    </div>
+</div> -->

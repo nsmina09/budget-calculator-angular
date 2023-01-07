@@ -16,6 +16,7 @@ export class LastmonthComponent implements OnInit {
   username:any;
   currentUser:any
 
+  //to get month name from id
   public monthNames=[
     'January',
     'February',
@@ -45,17 +46,16 @@ export class LastmonthComponent implements OnInit {
   }
 
 lastMonth(){
+  //to get month id and username from url
 this.route.paramMap.subscribe((params:ParamMap)=>{
  this. monthId=parseInt(params.get('month')||'');
  this.username=params.get('username')
-  this.month=this.monthNames[this.monthId]
-  console.log(this.month);
-  let date=localStorage.getItem('prevFirstDate');
+  this.month=this.monthNames[this.monthId] 
 })
 }
 
 getLastMonthTransaction(){
-  let id=this.monthId+1
+  let id=this.monthId+1;//in data base objects keys are from 1 to 12 butids are from 0 to 11 .. to match them add 1 to id
 this.ds.getLastMonthTransaction(this.username).subscribe((result:any)=>{
   console.log(result.transacttionPerMonth[id]);
   this.lastMonthArray=result.transacttionPerMonth[id];

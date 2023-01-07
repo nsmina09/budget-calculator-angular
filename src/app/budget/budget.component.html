@@ -125,7 +125,7 @@
                     <td class="border border-success border-1">{{b.amount}}</td>
                     <td class="border border-success border-1">{{b.bal}}</td>
                     <th *ngIf="l"><Button (click)="delete(table)" class="btn btn-outline-warning">Delete</Button></th>
-                    <th *ngIf="l"><Button data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="edit()" class="btn btn-outline-warning">Edit</Button></th>
+                    <th *ngIf="l"><Button data-bs-toggle="modal" data-bs-target="#exampleModal2"   class="btn btn-outline-warning">Edit</Button></th>
                 </tr>
             </tbody>
         </table>
@@ -137,7 +137,7 @@
 
 
 <!-- Modal -->
-<!-- <div class="modal fade text-start" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div  class="modal fade text-start" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -150,30 +150,31 @@
                     
                     <div id="radiodiv" class="mb-3">
                         <label for="credit">Credit</label>
-                        <input (change)="onChange($event)" id="credit" type="radio" value="credit"
-                            name="typeOfTransaction">
+                        <input (change)="onEditChange($event)" id="credit" type="radio" value="credit"
+                            name="typeOfTransaction" [checked]="lastType=='credit' ? true : false" >
+
                         <label for="debit">Debit</label>
-                        <input (change)="onChange($event)" id="debit" type="radio" value="debit"
-                            name="typeOfTransaction">
+                        <input (change)="onEditChange($event)" id="debit" type="radio" value="debit"
+                            name="typeOfTransaction" [checked]="lastType=='debit' ? true : false">
                     </div>
 
                     <label for="">Category(required)</label>
-                    <input [(ngModel)]="category" class="mb-3 form-control border-success border-success" id="category"
-                        type="text" placeholder="category" name="category">
+                    <input [(ngModel)]="lastCategory" class="mb-3 form-control border-success border-success" id="category"
+                        type="text" placeholder="{{lastCategory}}" name="category">
 
                     <label for="">Amount (required)</label>
-                    <input [(ngModel)]="amount" class="form-control border-success" id="amount" type="text"
-                        placeholder="Amount" name="amount">
+                    <input [(ngModel)]="lastAmount" class="form-control border-success" id="amount" type="text"
+                        placeholder="{{lastAmount}}" name="amount">
 
                     <br>
                     <label for="">Date (required)</label>
-                    <input [(ngModel)]="date" class="mb-3 form-control border-success" id="date" type="date"
-                        placeholder="Date" name="date"
+                    <input [(ngModel)]="lastDate" class="mb-3 form-control border-success" id="date" type="date"
+                        placeholder="{{lastDate}}" name="date"
                         [max]="getToday()" [min]="getMin()"
                          >
 
                     <label for="">Note </label>
-                    <input [(ngModel)]="note" class="form-control border-success" type="text" placeholder="Note"
+                    <input [(ngModel)]="lastDateNote" class="form-control border-success" type="text" placeholder="{{lastDateNote}}"
                         id="note" name="note">
 
                 </form>
@@ -192,9 +193,9 @@
             <div class="modal-footer">
                 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button (click)="addTransaction()" type="button" class="btn btn-outline-success"
+                <button type="button" class="btn btn-outline-success"
                     data-bs-dismiss="modal">Save </button>
             </div>
         </div>
     </div>
-</div> -->
+</div>

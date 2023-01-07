@@ -9,31 +9,31 @@ import { DataserviceService } from '../service/dataservice.service';
 })
 export class RemarksComponent implements OnInit {
 
-currentUser:any;
-eachbal:any
-currentUsername:any
-appRegisteredMonth:any
-balance:any
-lastDate:any
-lastTransaction:any
-prevMonth:any
+  currentUser: any;
+  eachbal: any
+  currentUsername: any
+  appRegisteredMonth: any
+  balance: any
+  lastDate: any
+  lastTransaction: any
+  prevMonth: any
 
 
-  constructor(private router:Router,private ds:DataserviceService) { 
-    this.currentUser=localStorage.getItem('currentUser')
-    this.currentUsername=localStorage.getItem('currentUsername')
-    this.appRegisteredMonth=localStorage.getItem('appRegisteredMonth')
-    this.balance = localStorage.getItem('balance'); 
+  constructor(private router: Router, private ds: DataserviceService) {
+    this.currentUser = localStorage.getItem('currentUser')
+    this.currentUsername = localStorage.getItem('currentUsername')
+    this.appRegisteredMonth = localStorage.getItem('appRegisteredMonth')
+    this.balance = localStorage.getItem('balance');
   }
 
   ngOnInit(): void {
     this.getTransaction();
-    if(!localStorage.getItem('currentUsername')){
+    if (!localStorage.getItem('currentUsername')) {
       this.router.navigateByUrl('')
     }
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUsername');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token')
@@ -41,27 +41,23 @@ prevMonth:any
   }
 
   getTransaction() {
-    console.log(this.currentUsername);
-    
     this.ds.getTransaction(this.currentUsername).subscribe((result: any) => {
+      //to get full transaction get balance array details
       this.eachbal = result.balanceArray;
-      console.log(this.eachbal);
-      this.lastTransaction=this.eachbal[this.eachbal.length-1];
-      this.lastDate=this.lastTransaction.date;
-     let lastDateFormat=new Date(this.lastDate)
-      console.log(lastDateFormat);
-     let prev = new Date(lastDateFormat.getFullYear(), lastDateFormat.getMonth()-1, 1);
-     console.log(prev);
-     this.prevMonth=prev.getMonth();
-     console.log(this.prevMonth);
+      //we have to navigate to last month from this page also, so we need last month details also here 
+      this.lastTransaction = this.eachbal[this.eachbal.length - 1];
+      this.lastDate = this.lastTransaction.date;
+      let lastDateFormat = new Date(this.lastDate)
+      let prev = new Date(lastDateFormat.getFullYear(), lastDateFormat.getMonth() - 1, 1);
+      this.prevMonth = prev.getMonth();
     },
       (result) => {
         alert(result.error.message)
       })
   }
 
-  lastMonth(){
-    this.router.navigate(['/lastmonth',this.prevMonth,this.currentUsername])
-      }
+  lastMonth() {
+    this.router.navigate(['/lastmonth', this.prevMonth, this.currentUsername])
+  }
 
 }

@@ -90,4 +90,17 @@ export class DataserviceService {
        }
     return this.http.get('http://localhost:3000/last-transaction',httpOptions,);
   }
+
+  updateLastTransaction(username: any, type: any, category: any, amount: any, date: any, note: any,month:any){
+    let data = {
+      username,
+      type,
+      category,
+      amount,
+      date,
+      note,
+      month
+    }
+    return this.http.post('http://localhost:3000/update-last', data, this.getToken(),);
+  }
 }

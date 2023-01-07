@@ -156,6 +156,58 @@ export class BudgetComponent implements OnInit {
     this.eachbal.pop();
   }
 
+  // edit(table:any){
+  //   this.ds.deleteRow(this.currentUsername).subscribe((result: any) => { 
+  //     this.eachbal=result.balanceArray
+  //      }, result => {  }
+  //   );
+  //   //to delete last table row from ui
+  //   // let rows = table.rows.length;
+  //   // table.deleteRow(rows - 1);
+  //   // this.eachbal.pop();
+  // }
+
+//   onEdit(){
+//     let date=new Date();
+//     let month=date.getMonth()+1;
+//     if (this.lastType == null || this.lastCategory == null || this.lastAmount == null || this.lastDate == null) {
+//       this.emptyError = 'please fill all the required fields';
+//       alert(this.emptyError);
+//     } else {
+//       this.ds.addTransaction(this.currentUsername, this.lastType, this.lastCategory, this.lastAmount, this.lastDate, this.lastDateNote, month)
+//       .subscribe((result: any) => {
+//         //for showing transactions in ui
+//         this.eachbal = result.balanceArray;
+//         //get last transaction details
+//         this.lastTransaction = this.eachbal[this.eachbal.length - 1];
+//         this.lastDate = this.lastTransaction.date;
+//         let lastDateFormat = new Date(this.lastDate)
+//         let prev = new Date(lastDateFormat.getFullYear(), lastDateFormat.getMonth() - 1, 1);//get 1st date format of previuos month
+//         localStorage.setItem('prevFirstDate', prev.toDateString());
+//         this.prevMonth = prev.getMonth(); 
+//       },
+//         (result) => {
+//           alert(result.error.message)
+//         })
+//     }
+
+// }
+
+onEdit(){
+  let date=new Date();
+  let month=date.getMonth()+1;
+  this.ds.updateLastTransaction(this.currentUsername, this.lastType, this.lastCategory, this.lastAmount, this.lastDate, this.lastDateNote, month).
+  subscribe((result:any)=>{
+    console.log('balance array');
+    console.log(result.balanceArray);
+    console.log('transaction array');
+    console.log(result.transactionsArray); 
+    this.eachbal=result.balanceArray;   
+  },(result:any)=>{
+    console.log(result.error.message);
+    
+  })
+}
 
   onEditChange(e: any) {
     this.lastType = e.target.value
